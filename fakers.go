@@ -101,9 +101,16 @@ func Fuzz(e interface{}) {
 		value := reflect.ValueOf(e).Elem()
 		for i := 0; i < ty.NumField(); i++ {
 			field := value.Field(i)
-
 			if field.CanSet() {
-				field.Set(fuzzValueFor(field.Kind()))
+				if field.Kind() == reflect.Ptr {
+					fuzzedValue := fuzzValueFor(field.Type().Elem().Kind())
+					ptr := reflect.New(reflect.TypeOf(fuzzedValue.Interface()))
+					ptr.Elem().Set(fuzzedValue)
+					field.Set(ptr)
+				} else {
+					fuzzedValue := fuzzValueFor(field.Kind())
+					field.Set(fuzzedValue)
+				}
 			}
 		}
 
@@ -119,7 +126,7 @@ func allGenerators() map[string]func() string {
 	return dst
 }
 
-//findFakeFunctionFor returns a faker function for a fako identifier
+// findFakeFunctionFor returns a faker function for a fako identifier
 func findFakeFunctionFor(fako string) func() string {
 	result := func() string { return "" }
 

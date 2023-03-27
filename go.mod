@@ -3,10 +3,10 @@ module github.com/codelite7/fako
 go 1.20
 
 require (
+	github.com/catalystsquad/app-utils-go v1.0.7
 	github.com/icrowley/fake v0.0.0-20221112152111-d7b7e2276db2
 	github.com/markbates/inflect v1.0.4
 	github.com/stretchr/testify v1.8.2
-	github.com/wawandco/fako v0.0.0-20180828010250-c36a0bc97398
 )
 
 require (
@@ -15,5 +15,7 @@ require (
 	github.com/gobuffalo/envy v1.6.5 // indirect
 	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/sirupsen/logrus v1.9.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -1,11 +1,12 @@
 package fako_test
 
 import (
+	"github.com/stretchr/testify/require"
 	"strings"
 	"testing"
 
+	"github.com/codelite7/fako"
 	"github.com/stretchr/testify/assert"
-	"github.com/wawandco/fako"
 )
 
 type OU struct {
@@ -17,6 +18,22 @@ type OU struct {
 	Address  string `fako:"street_address"`
 	IgnoreMe string ``
 	AValue   string `fako:"a_gen"`
+}
+
+func TestFuzzPointer(t *testing.T) {
+	type thing struct {
+		PtrString *string
+		PtrInt    *int
+		PtrFloat  *float64
+	}
+	thingy := thing{}
+	fako.Fuzz(&thingy)
+	require.NotNil(t, thingy.PtrString)
+	require.NotNil(t, thingy.PtrInt)
+	require.NotNil(t, thingy.PtrFloat)
+	require.NotEmpty(t, thingy.PtrString)
+	require.NotEmpty(t, thingy.PtrInt)
+	require.NotEmpty(t, thingy.PtrFloat)
 }
 
 func TestFillsFields(t *testing.T) {
